@@ -1,0 +1,548 @@
+#sql\
+
+====================================================
+#GROUP BY and HAVING Clause with Solved Examples
+====================================================
+Group by clause is a set of rtows into a set of summary rows by values of column or expressions.
+Generally it is used with aggregates functions like SUM | AVG | MAX | MIN | COUNT
+syntax : SELECT col1,col2,. . aggregate_function(col) from tablename where condition group by col1,col2,..;
+use college; --> database changed
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(marks) from student;
++------------+
+| sum(marks) |
++------------+
+|        322 |
++------------+
+1 row in set (0.07 sec)
+
+-->Group by with having  
+This clause is used to filter the groups returned.
+syntax : select col1,col2,... aggregate_function(col) from tableName where condition group by col1,col2.,.. having condition;
+
+select count(*) from student;
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select branch,count(*) from student group by branch;
++--------+----------+
+| branch | count(*) |
++--------+----------+
+| IT     |        3 |
+| CS     |        2 |
++--------+----------+
+2 rows in set (0.06 sec)
+
+mysql> select branch,sum(marks) from student group by branch;
++--------+------------+
+| branch | sum(marks) |
++--------+------------+
+| IT     |        192 |
+| CS     |        130 |
++--------+------------+
+2 rows in set (0.01 sec)
+
+mysql> select branch,avg(marks) from student group by branch;
++--------+------------+
+| branch | avg(marks) |
++--------+------------+
+| IT     |    64.0000 |
+| CS     |    65.0000 |
++--------+------------+
+2 rows in set (0.03 sec)
+
+mysql> select branch,avg(marks) from student group by branch having branch in ('cse','it');
++--------+------------+
+| branch | avg(marks) |
++--------+------------+
+| IT     |    64.0000 |
++--------+------------+
+1 row in set (0.01 sec)
+
+=======================================================================
+SubQuery(Nested Query) with EXISTS and NOT EXISTS Clause
+=======================================================================
+Nested quey -->  subquery is nested query within another queries like select,insert,update or delete.
+select col1,col2,.. from tablename where condition[=|in|not in...] {nested query}
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into dept values(6,'IT');
+Query OK, 1 row affected (0.21 sec)
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
+|      6 | IT    |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select fname from faculty where deptid IN(select deptid from dept where dname = 'EE');
++--------+
+| fname  |
++--------+
+| chetan |
++--------+
+
+mysql> select fname from faculty where deptid IN(select deptid from dept where dname = 'IT');
+Empty set (0.00 sec)
+
+mysql> select fname from faculty where deptid IN(select deptid from dept where dname IN('EC','CSE')); --> ERROR
++-------+
+| fname |
++-------+
+| Anshu |
+| Anuj  |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT BRANCH,avg(marks) from student where branch in(select dname from dept where deptid not in (1,3)) group by branch;
++--------+------------+
+| BRANCH | avg(marks) |
++--------+------------+
+| IT     |    64.0000 |
+| CS     |    65.0000 |
++--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select fname from faculty where deptid = (select deptid from dept where dname IN('IT','CSE'));
+Empty set (0.00 sec)
+
+Exist or not exist -->
+syntax : select * from table_name where exists|not exists(subquery);
+Exist : It is used to test for the existance of any record in a subquery.
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
+|      6 | IT    |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where exists (select * from dept where deptid=1);
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where exists (select * from dept where deptid=5); 
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+
+mysql> select * from student where not exists (select * from dept where deptid=1); 
+Empty set (0.00 sec)
+
+mysql> select * from student where not exists (select * from dept where deptid=5);
+Empty set (0.00 sec)
+
+==============================================================
+UNION, UNION ALL, INTERSECT and MINUS Set Operators
+==============================================================
+Union --> this operator is used to combine two or more result sets into single result set. By default, 
+Union operator removes duplicate rows(use union all to retain duplicate rows)
+SYNTAX : select col1,col2,.. from table1 union|union all select col1,col2,.. from table2;
+rules -->number and order and column must be same.
+rules --> data types of the col must be same.
+
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from DEPT;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
+|      6 | IT    |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select fname from faculty union select sname from student;
++--------+
+| fname  |
++--------+
+| Aman   |
+| Anshu  |
+| Anuj   |
+| chetan |
+| Bhanu  |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student values(9,'varun','ECE',70);
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
+|    9 | varun  | ECE    |    70 |
++------+--------+--------+-------+
+6 rows in set (0.00 sec)
+
+With duplicate data, it will not give duplicate data if we are using union.
+if we use union, duplicasy will automatically removed.
+
+mysql> select fname from faculty union all select sname from student;
++--------+
+| fname  |
++--------+
+| Aman   |
+| Anshu  |
+| Anuj   |
+| chetan |
+| Bhanu  |
+| Aman   |
+| Anshu  |
+| Anuj   |
+| Chetan |
+| Bhanu  |
+| varun  |
++--------+
+11 rows in set (0.00 sec)
+
+Intersect --> this operator is used to fetch common rows from two or more tables.
+it compares the result of two queries and returns the distinct rows that are output by both left and right queries.
+syntax : select col1,col2,.. from table1 intersect select col1,col2,.. from table2;
+
+===============================================================
+INSERT, UPDATE, DELETE Statement with Examples
+===============================================================
+Data manipulation language
+Insert statement is used to insert data into database tables.
+syntax : insert into table(col1,col2,..) values (value1,value2,..);
+Inserting multiple rows -->
+insert into table(col1,col2,..) values(value1,value2,..),() 
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
+|      6 | IT    |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> insert into dept value(5,'ICE');
+Query OK, 1 row affected (0.28 sec)
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
+|      6 | IT    |
+|      5 | ICE   |
++--------+-------+
+7 rows in set (0.00 sec)
+
+insert into dept value('ICE',5); --> it will give error
+insert into dept value(dname,deptid) values('ICE',6);  -> error
+
+mysql> insert into dept values(7,'A'),(8,'B');
+Query OK, 2 rows affected (0.26 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
+|      6 | IT    |
+|      5 | ICE   |
+|      7 | A     |
+|      8 | B     |
++--------+-------+
+9 rows in set (0.00 sec)
+
+mysql> delete from dept where deptid in (7,8);
+Query OK, 2 rows affected (0.60 sec)
+
+mysql> insert into dept values(7,'EEE'),(8,'IT');
+Query OK, 2 rows affected (2.42 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
+|      6 | IT    |
+|      5 | ICE   |
+|      7 | EEE   |
+|      8 | IT    |
++--------+-------+
+9 rows in set (0.00 sec)
+
+Insert with select statement :
+insert with select clause - it is used to insert data into table fromanother table.
+syntax : Insert into table_name select col1,col2,..from table_name; 
+
+mysql> create table dept_temp(deptid int, deptname varchar(20));
+Query OK, 0 rows affected (0.65 sec)
+
+mysql> insert into dept_temp select deptid,dname from dept;
+Query OK, 9 rows affected (0.15 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept_temp;
++--------+----------+
+| deptid | deptname |
++--------+----------+
+|      1 | cs       |
+|      2 | EC       |
+|      3 | MECH     |
+|      4 | EE       |
+|      5 | cs       |
+|      6 | IT       |
+|      5 | ICE      |
+|      7 | EEE      |
+|      8 | IT       |
++--------+----------+
+9 rows in set (0.00 sec)
+
+modifying data --> this ststement is used to update existing data in a table.
+update table_name set col1 = exp1, col2 = exp2,.. where condition;
+
+mysql> select * from dept_temp;
++--------+----------+
+| deptid | deptname |
++--------+----------+
+|      1 | cs       |
+|      2 | EC       |
+|      3 | MECH     |
+|      4 | EE       |
+|      5 | cs       |
+|      6 | IT       |
+|      5 | ICE      |
+|      7 | EEE      |
+|      8 | IT       |
++--------+----------+
+9 rows in set (0.00 sec)
+
+mysql> update dept_temp set deptname = 'Applied SC' where deptid=7;
+Query OK, 1 row affected (1.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from dept_temp;
++--------+------------+
+| deptid | deptname   |
++--------+------------+
+|      1 | cs         |
+|      2 | EC         |
+|      3 | MECH       |
+|      4 | EE         |
+|      5 | cs         |
+|      6 | IT         |
+|      5 | ICE        |
+|      7 | Applied SC |
+|      8 | IT         |
++--------+------------+
+9 rows in set (0.00 sec)
+
+update dept_temp set deptname = 'Applied SC'; --> all deptname will become same 
+
+Update with select statement.
+update table_name set col1=(nested query) where condition;
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
+|    9 | varun  | ECE    |    70 |
++------+--------+--------+-------+
+6 rows in set (0.01 sec)
+
+Delete statement is used to delete data from table,
+syntax : delete from table_name where condition[optional];
+
+Delete with limit clause is used to delete specific number of records.
+example - delete first two students records.
+
+mysql> select * from dept_temp;
++--------+------------+
+| deptid | deptname   |
++--------+------------+
+|      1 | IT         |
+|      2 | EC         |
+|      3 | MECH       |
+|      4 | EE         |
+|      5 | cs         |
+|      6 | IT         |
+|      5 | ICE        |
+|      7 | Applied SC |
+|      8 | IT         |
++--------+------------+
+9 rows in set (0.00 sec)
+
+mysql> delete from dept_temp where deptid=2;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from dept_temp;
++--------+------------+
+| deptid | deptname   |
++--------+------------+
+|      1 | IT         |
+|      3 | MECH       |
+|      4 | EE         |
+|      5 | cs         |
+|      6 | IT         |
+|      5 | ICE        |
+|      7 | Applied SC |
+|      8 | IT         |
++--------+------------+
+8 rows in set (0.00 sec)
+
+
+mysql> delete from dept_temp limit 2;
+Query OK, 2 rows affected (0.11 sec)
+
+mysql> select * from dept_temp;
++--------+------------+
+| deptid | deptname   |
++--------+------------+
+|      4 | EE         |
+|      5 | cs         |
+|      6 | IT         |
+|      5 | ICE        |
+|      7 | Applied SC |
+|      8 | IT         |
++--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from dept_temp;
++--------+------------+
+| deptid | deptname   |
++--------+------------+
+|      4 | EE         |
+|      5 | cs         |
+|      6 | IT         |
+|      5 | ICE        |
+|      7 | Applied SC |
+|      8 | IT         |
++--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> delete from dept_temp;
+Query OK, 6 rows affected (0.36 sec)
+
+mysql> select * from dept_temp;
+Empty set (0.00 sec)
+
