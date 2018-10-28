@@ -1,0 +1,546 @@
+#sql learning 
+
+====================================================================
+#LIKE Operator with Solved Queries
+====================================================================
+Like operator --> to search or match the patterns.
+It is used to select rows/data based on patterns following by 
+two wildcards characters used with like operator
+-->percentage - (%) it matches any string of zero or more character
+-->underscore - (_) it matches exactly one single character
+syntax : select column from table where condition like 'pattern';
+
+mysql> use college;
+Database changed
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty where fname like 'A%';
++------+-------+---------------+--------+
+| Fid  | Fname | Qualification | DeptId |
++------+-------+---------------+--------+
+|  101 | Aman  | B.tech        |      1 |
+|  102 | Anshu | BCA           |      2 |
+|  103 | Anuj  | BCA           |      2 |
++------+-------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from faculty where fname like '%N';
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  104 | chetan | B.pharma      |      4 |
++------+--------+---------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from faculty where fname like '_A%';
+Empty set (0.00 sec)
+
+mysql> select fname from faculty where fname like '_A%';
+Empty set (0.00 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select sname from student where sname not like '%N';
++-------+
+| sname |
++-------+
+| Anshu |
+| Anuj  |
+| Bhanu |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select sname,marks from student where sname  not like '_A%';
++--------+-------+
+| sname  | marks |
++--------+-------+
+| Aman   |    75 |
+| Anshu  |    54 |
+| Anuj   |    45 |
+| Chetan |    76 |
+| Bhanu  |    72 |
++--------+-------+
+5 rows in set (0.00 sec)
+
+===============================================================
+#ORDER BY Clause with Solved Examples
+===============================================================
+Order By - it is useed to sort the result of select statement.
+syntax : select column from table order by column1[ASC|DESC], column2[ASC|DESC], . 
+by default sorting asc 
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by sname;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  105 | Bhanu  | IT     |    72 |
+|  104 | Chetan | CS     |    76 |
++------+--------+--------+-------+
+5 rows in set (0.03 sec)
+
+mysql> select * from student order by sname asc;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  105 | Bhanu  | IT     |    72 |
+|  104 | Chetan | CS     |    76 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by sname desc;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
+|  103 | Anuj   | IT     |    45 |
+|  102 | Anshu  | CS     |    54 |
+|  101 | Aman   | IT     |    75 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by marks desc;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  104 | Chetan | CS     |    76 |
+|  101 | Aman   | IT     |    75 |
+|  105 | Bhanu  | IT     |    72 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by sname asc, marks desc;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  105 | Bhanu  | IT     |    72 |
+|  104 | Chetan | CS     |    76 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by sname desc, marks asc;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
+|  103 | Anuj   | IT     |    45 |
+|  102 | Anshu  | CS     |    54 |
+|  101 | Aman   | IT     |    75 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty order by qualification;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  104 | chetan | B.pharma      |      4 |
+|  101 | Aman   | B.tech        |      1 |
+|  105 | Bhanu  | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty order by field(qualification,'BCA');
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty order by field(qualification,'B.Pharma','BCA');
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  105 | Bhanu  | B.tech        |      1 |
+|  104 | chetan | B.pharma      |      4 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty order by field(qualification,'BCA','B.Pharma');
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  105 | Bhanu  | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+=====================================================================
+JOINS - Cross, Inner, Left, Right and Self Join with Solved Examples
+=====================================================================
+Join - it is method of linking one table with another table.
+1.Cross join
+2.inner join
+3.left join
+4.right join
+Mysql does not support full pouter join.
+5.self join
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> drop table student;
+Query OK, 0 rows affected (1.04 sec)
+
+mysql> select * from student;
+ERROR 1146 (42S02): Table 'college.student' doesn't exist
+mysql> create table Student(Sid int,Sname varchar(100),Branch varchar(50),marks int);
+Query OK, 0 rows affected (0.70 sec)
+
+mysql> insert into Student values(1,'Aman','IT',75);
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into Student values(2,'Anshu','CS',54);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into Student values(3,'Anuj','IT',45);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into Student values(4,'Chetan','CS',76);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Student values(5,'Bhanu','IT',72);
+Query OK, 1 row affected (1.79 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+-------------------------------------------
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|   1001 | cs    |
+|   1002 | EC    |
+|   1003 | MECH  |
+|   1004 | EE    |
+|   1005 | cs    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> drop table dept;
+Query OK, 0 rows affected (1.26 sec)
+
+mysql> create table Dept(deptID int,dname varchar(20));
+Query OK, 0 rows affected (0.99 sec)
+
+mysql> insert into Dept values(1,'cs');
+Query OK, 1 row affected (0.22 sec)
+
+mysql> insert into Dept values(2,'EC');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Dept values(3,'MECH');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into Dept values(4,'EE');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into Dept values(5,'cs');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from Dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+---------------------------------------
+Final One
+---------------------------------------
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.02 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|    1 | Aman   | IT     |    75 |
+|    2 | Anshu  | CS     |    54 |
+|    3 | Anuj   | IT     |    45 |
+|    4 | Chetan | CS     |    76 |
+|    5 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.03 sec)
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+1.cross join - It returns the cartesian product of rows from the joiner tables.
+syntax : select * from T1 cross join T2 where join_condition[optional];
+
+mysql> use college;
+Database changed
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|      1 | cs    |
+|      2 | EC    |
+|      3 | MECH  |
+|      4 | EE    |
+|      5 | cs    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty cross join dept;
++------+--------+---------------+--------+--------+-------+
+| Fid  | Fname  | Qualification | DeptId | deptID | dname |
++------+--------+---------------+--------+--------+-------+
+|  101 | Aman   | B.tech        |      1 |      1 | cs    |
+|  102 | Anshu  | BCA           |      2 |      1 | cs    |
+|  103 | Anuj   | BCA           |      2 |      1 | cs    |
+|  104 | chetan | B.pharma      |      4 |      1 | cs    |
+|  105 | Bhanu  | B.tech        |      1 |      1 | cs    |
+|  101 | Aman   | B.tech        |      1 |      2 | EC    |
+|  102 | Anshu  | BCA           |      2 |      2 | EC    |
+|  103 | Anuj   | BCA           |      2 |      2 | EC    |
+|  104 | chetan | B.pharma      |      4 |      2 | EC    |
+|  105 | Bhanu  | B.tech        |      1 |      2 | EC    |
+|  101 | Aman   | B.tech        |      1 |      3 | MECH  |
+|  102 | Anshu  | BCA           |      2 |      3 | MECH  |
+|  103 | Anuj   | BCA           |      2 |      3 | MECH  |
+|  104 | chetan | B.pharma      |      4 |      3 | MECH  |
+|  105 | Bhanu  | B.tech        |      1 |      3 | MECH  |
+|  101 | Aman   | B.tech        |      1 |      4 | EE    |
+|  102 | Anshu  | BCA           |      2 |      4 | EE    |
+|  103 | Anuj   | BCA           |      2 |      4 | EE    |
+|  104 | chetan | B.pharma      |      4 |      4 | EE    |
+|  105 | Bhanu  | B.tech        |      1 |      4 | EE    |
+|  101 | Aman   | B.tech        |      1 |      5 | cs    |
+|  102 | Anshu  | BCA           |      2 |      5 | cs    |
+|  103 | Anuj   | BCA           |      2 |      5 | cs    |
+|  104 | chetan | B.pharma      |      4 |      5 | cs    |
+|  105 | Bhanu  | B.tech        |      1 |      5 | cs    |
++------+--------+---------------+--------+--------+-------+
+25 rows in set (0.00 sec)
+
+mysql> select * from faculty cross join dept where dept.deptid=1;
++------+--------+---------------+--------+--------+-------+
+| Fid  | Fname  | Qualification | DeptId | deptID | dname |
++------+--------+---------------+--------+--------+-------+
+|  101 | Aman   | B.tech        |      1 |      1 | cs    |
+|  102 | Anshu  | BCA           |      2 |      1 | cs    |
+|  103 | Anuj   | BCA           |      2 |      1 | cs    |
+|  104 | chetan | B.pharma      |      4 |      1 | cs    |
+|  105 | Bhanu  | B.tech        |      1 |      1 | cs    |
++------+--------+---------------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+2.Inner join -> it matches rows of one table with another table.
+syntax : select col_list from t1 inner join t2 on join_condition;
+
+mysql> select f.fname,d.dname from faculty f inner join dept d ON f.deptid=d.deptid;
++--------+-------+
+| fname  | dname |
++--------+-------+
+| Aman   | cs    |
+| Bhanu  | cs    |
+| Anshu  | EC    |
+| Anuj   | EC    |
+| chetan | EE    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select f.fname,d.dname from faculty f inner join dept d ON f.deptid=d.deptid where d.deptid=2;
++-------+-------+
+| fname | dname |
++-------+-------+
+| Anshu | EC    |
+| Anuj  | EC    |
++-------+-------+
+2 rows in set (0.00 sec)
+
+
+3.left join --> it results all the matching rows from two tables and also the rows that are not
+matched from lest table.
+syntax : select col from table1 left join table2 on join_condition;
+
+mysql> select f.fname,d.dname from faculty f left join dept d on f.deptid=d.deptid;
++--------+-------+
+| fname  | dname |
++--------+-------+
+| Aman   | cs    |
+| Bhanu  | cs    |
+| Anshu  | EC    |
+| Anuj   | EC    |
+| chetan | EE    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+4.right join --> it results all the matching rows from two tables and also the rows that are not
+matched from left table.
+
+syntax : select col from table1 right join table2 on join_condition;
+
+select f.fname,d.dname from faculty f right join dept d on f.deptid=d.deptid;
+mysql> select f.fname,d.dname from faculty f right join dept d on f.deptid=d.deptid;
++--------+-------+
+| fname  | dname |
++--------+-------+
+| Aman   | cs    |
+| Anshu  | EC    |
+| Anuj   | EC    |
+| chetan | EE    |
+| Bhanu  | cs    |
+| NULL   | MECH  |
+| NULL   | cs    |
++--------+-------+
+7 rows in set (0.00 sec)
+
+5self join --> used to join table from itself.
+Create a table : 
+mysql> create table emp(empid int, ename varchar(20), esuper int);
+Query OK, 0 rows affected (0.66 sec)
+mysql> insert into emp values(1,'A',2);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> insert into emp values(2,'B',3);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into emp values(3,'C',4);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> SELECT * from  emp;
++-------+-------+--------+
+| empid | ename | esuper |
++-------+-------+--------+
+|     1 | A     |      2 |
+|     2 | B     |      3 |
+|     3 | C     |      4 |
++-------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select e.ename as "employee name", s.esuper as "supervisor" from emp e,emp s where e.esuper = s.empid;
++---------------+------------+
+| employee name | supervisor |
++---------------+------------+
+| A             |          3 |
+| B             |          4 |
++---------------+------------+
+2 rows in set (0.00 sec)
+
+
