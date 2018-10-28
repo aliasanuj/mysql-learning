@@ -1,0 +1,557 @@
+#MYSQL
+
+mysql> create database college;
+mysql> use college;
+
+mysql> create table Faculty(Fid int,Fname varchar(100),Qualification varchar(50),DeptId int);
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> create table Student(Sid int,Sname varchar(100),Branch varchar(50),marks int);
+Query OK, 0 rows affected (0.45 sec)
+
+mysql> create table Dept(deptID int,dname varchar(20));
+Query OK, 0 rows affected (0.52 s)
+
+mysql> describe faculty;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| Fid           | int(11)      | YES  |     | NULL    |       |
+| Fname         | varchar(100) | YES  |     | NULL    |       |
+| Qualification | varchar(50)  | YES  |     | NULL    |       |
+| DeptId        | int(11)      | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> describe student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| Sid    | int(11)      | YES  |     | NULL    |       |
+| Sname  | varchar(100) | YES  |     | NULL    |       |
+| Branch | varchar(50)  | YES  |     | NULL    |       |
+| marks  | int(11)      | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> describe dept;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| deptID | int(11)     | YES  |     | NULL    |       |
+| dname  | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+insert into Faculty values(101,'Aman','B.tech',01);
+insert into Faculty values(102,'Anshu','BCA',02);
+insert into Faculty values(103,'Anuj','BCA',02);
+insert into Faculty values(104,'chetan','B.pharma',04);
+insert into Faculty values(105,'Bhanu','B.tech',01);
+select * from Faculty;
+
+mysql> select * from Faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+insert into Student values(101,'Aman','IT',75);
+insert into Student values(102,'Anshu','CS',54);
+insert into Student values(103,'Anuj','IT',45);
+insert into Student values(104,'Chetan','CS',76);
+insert into Student values(105,'Bhanu','IT',72);
+select * from student;
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+insert into Dept values(1001,'cs');
+insert into Dept values(1002,'EC');
+insert into Dept values(1003,'MECH');
+insert into Dept values(1004,'EE');
+insert into Dept values(1005,'cs');
+select * from Dept;
+
+mysql> select * from Dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|   1001 | cs    |
+|   1002 | EC    |
+|   1003 | MECH  |
+|   1004 | EE    |
+|   1005 | cs    |
++--------+-------+
+
+================================================================
+#Select Statement, Distinct Clause with Example Queries
+================================================================
+syntax : select column1,column2 . . . From table1.table2 . .  .;
+use college; --> to change database
+
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select fname from faculty;
++--------+
+| fname  |
++--------+
+| Aman   |
+| Anshu  |
+| Anuj   |
+| chetan |
+| Bhanu  |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> select fid,fname from faculty;
++------+--------+
+| fid  | fname  |
++------+--------+
+|  101 | Aman   |
+|  102 | Anshu  |
+|  103 | Anuj   |
+|  104 | chetan |
+|  105 | Bhanu  |
++------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select deptid,dname from Dept;
++--------+-------+
+| deptid | dname |
++--------+-------+
+|   1001 | cs    |
+|   1002 | EC    |
+|   1003 | MECH  |
+|   1004 | EE    |
+|   1005 | cs    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+#select * from table_name  --> to fetch all data
+#select Distinct columns from table_name --> to fetch distinct data 
+
+mysql> select * from Dept;
++--------+-------+
+| deptID | dname |
++--------+-------+
+|   1001 | cs    |
+|   1002 | EC    |
+|   1003 | MECH  |
+|   1004 | EE    |
+|   1005 | cs    |
++--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select branch from student;
++--------+
+| branch |
++--------+
+| IT     |
+| CS     |
+| IT     |
+| CS     |
+| IT     |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct branch from student;
++--------+
+| branch |
++--------+
+| IT     |
+| CS     |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct qualification ,deptid from faculty;
++---------------+--------+
+| qualification | deptid |
++---------------+--------+
+| B.tech        |      1 |
+| BCA           |      2 |
+| B.pharma      |      4 |
++---------------+--------+
+3 rows in set (0.00 sec)
+
+commit; --> Always use the commit before closing or else data will not store.
+
+==============================================================
+#Where Clause, Logical(AND, OR) Operator
+==============================================================
+To filter the data we can use where clause. 
+Where clause allows to filter row based on certain conditions or expression. 
+
+select column1,column2,. . . from table1,table2 where condition ...
+--> filtering data with operator 
+= equal to 
+<> or != not equal to 
+< less than
+> greater than
+<= less that or equal to 
+>= greater than or equal to 
+and operator --> return true if both true
+or operator --> return trur either condition true
+
+mysql> use college;
+Database changed
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select fid,fname from faculty where qualification='B.Tech';
++------+-------+
+| fid  | fname |
++------+-------+
+|  101 | Aman  |
+|  105 | Bhanu |
++------+-------+
+2 rows in set (0.00 sec)
+
+--> use '' if its varchar, use nothing if it is int
+
+mysql> select * from faculty where qualification != 'ph.D';
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select sname from student where Branch='IT' and marks<80;
++-------+
+| sname |
++-------+
+| Aman  |
+| Anuj  |
+| Bhanu |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select sname from student where Branch='IT' or Branch='ECE';
++-------+
+| sname |
++-------+
+| Aman  |
+| Anuj  |
+| Bhanu |
++-------+
+3 rows in set (0.00 sec)
+
+==================================================================
+# IN, NOT IN Operator with Solved Queries
+==================================================================
+Filtering data--> in operator (used to filter data and allows to determine 
+if the value matches any one of the list or result of subquery.)
+syntax: select coumn1,column2,...from table1,table2,..where(expr|column_1)in ('value1','value2');
+
+Filtering data--> not in operator (used to filter data and allows to 
+determine if the value does not matches any one of the list or result of subquery.)
+syntax: select coumn1,column2,...from table1,table2,..where(expr|column_1)not in ('value1','value2');
+
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select fname from faculty where deptid=1 or deptid=3;
++-------+
+| fname |
++-------+
+| Aman  |
+| Bhanu |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select fname from faculty where deptid in (1,3);
++-------+
+| fname |
++-------+
+| Aman  |
+| Bhanu |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from faculty where qualification in ('B.tech','Ph.D');
++------+-------+---------------+--------+
+| Fid  | Fname | Qualification | DeptId |
++------+-------+---------------+--------+
+|  101 | Aman  | B.tech        |      1 |
+|  105 | Bhanu | B.tech        |      1 |
++------+-------+---------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from faculty where qualification='B.tech' or qualification='Ph.D';
++------+-------+---------------+--------+
+| Fid  | Fname | Qualification | DeptId |
++------+-------+---------------+--------+
+|  101 | Aman  | B.tech        |      1 |
+|  105 | Bhanu | B.tech        |      1 |
++------+-------+---------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where branch not in('CS','EC');
++------+-------+--------+-------+
+| Sid  | Sname | Branch | marks |
++------+-------+--------+-------+
+|  101 | Aman  | IT     |    75 |
+|  103 | Anuj  | IT     |    45 |
+|  105 | Bhanu | IT     |    72 |
++------+-------+--------+-------+
+3 rows in set (0.00 sec)
+
+==================================================================
+#Between and NOT Between Operator with Solved Queries
+==================================================================
+To filtering data--> BETWEEN operator (used to filter data and allows to
+SEPCIFY range 0 value to test.)
+syntax :
+select coumn1,column2,. . from table1,table2,. .  where (expr|column) between begin and end;
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where marks between 60 and 90;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+3 rows in set (0.02 sec)
+
+mysql> select * from student where marks not between 50 and 60;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+4 rows in set (0.00 sec)
+
+====================================================================
+#LIMIT and IS NULL Operator with Solved Queries
+====================================================================
+
+Limit is used to constrain the number of rows returned by select statement.
+syntax: select col1,col2,. . from tab1,tab2,. . limit offset,count;
+
+Fetch first N rows in mysql.
+syntax: Select col1,col2,. . from table limit n;
+
+IS NULL operator
+IS NULL operator used to check whether a value is null or not
+opposite of NULL is NOT NULL.
+
+mysql> use college;
+Database changed
+mysql> select * from faculty;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from faculty limit 4;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
++------+--------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from faculty limit 0,4;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  101 | Aman   | B.tech        |      1 |
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
++------+--------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from faculty limit 1,4;
++------+--------+---------------+--------+
+| Fid  | Fname  | Qualification | DeptId |
++------+--------+---------------+--------+
+|  102 | Anshu  | BCA           |      2 |
+|  103 | Anuj   | BCA           |      2 |
+|  104 | chetan | B.pharma      |      4 |
+|  105 | Bhanu  | B.tech        |      1 |
++------+--------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from faculty limit 1,1;
++------+-------+---------------+--------+
+| Fid  | Fname | Qualification | DeptId |
++------+-------+---------------+--------+
+|  102 | Anshu | BCA           |      2 |
++------+-------+---------------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  101 | Aman   | IT     |    75 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
+|  104 | Chetan | CS     |    76 |
+|  105 | Bhanu  | IT     |    72 |
++------+--------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student order by marks desc;
++------+--------+--------+-------+
+| Sid  | Sname  | Branch | marks |
++------+--------+--------+-------+
+|  104 | Chetan | CS     |    76 |
+|  101 | Aman   | IT     |    75 |
+|  105 | Bhanu  | IT     |    72 |
+|  102 | Anshu  | CS     |    54 |
+|  103 | Anuj   | IT     |    45 |
++------+--------+--------+-------+
+5 rows in set (0.03 sec)
+
+mysql> select * from student order by marks desc limit 1,1;
++------+-------+--------+-------+
+| Sid  | Sname | Branch | marks |
++------+-------+--------+-------+
+|  101 | Aman  | IT     |    75 |
++------+-------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> select sname from student order by marks desc limit 1,1;
++-------+
+| sname |
++-------+
+| Aman  |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select sname from student where branch is null;
+Empty set (0.00 sec)
+
+mysql> select sname from student where branch is not null;
++--------+
+| sname  |
++--------+
+| Aman   |
+| Anshu  |
+| Anuj   |
+| Chetan |
+| Bhanu  |
++--------+
+5 rows in set (0.00 sec)
