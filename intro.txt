@@ -1,0 +1,29 @@
+Hello Jeff !!
+Good afternoon.
+
+So we ae working as a part of GTI (Global technology infrasctucture) also known as GSMS (global storage
+mannagement system) or GSSD (global storage software development).
+
+so here our main task is we are performing BAU task in which consist of  :
+1. User related support.
+2. Data corelation activity. In data corelation we are corelating the data using some set of business rules
+and and providing the performance data to end users.
+Performance Data is “the raw observations and measurements identified during any activities performed to
+carry out for any tasks; e.g., actual cost, actual time duration, and the percent of work physically
+completed.”
+3. The technology which we are using is Python as programming language,Django as framework for backend side.
+Apart from that we are using React for frontend side and Oracle dababase along with CI/CD (continue
+integration/ continue delivery).
+
+Priorities :
+1. In our python script, we are enhancing the automation process. If there will be some glitch, it will fix the 90% of the task.
+2. POC (proof of concept) ,
+3. 
+
+Action :
+1. enhance the Domain knowledge, UPscale skill and certification.
+2. 
+
+Growth :
+1. Technology growth. As of now i am working on backend side, but also i want to work on front end side too to become a full stack developer.
+2.
